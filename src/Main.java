@@ -1,5 +1,10 @@
 public class Main {
 	public static void main(String[] args) {
-		new team.kallisto.Main(args).main();
+		try {
+			new team.kallisto.Main(args).main();
+		} catch (Throwable throwable) {
+			throwable.printStackTrace();
+			throw throwable;
+		}
 	}
 }

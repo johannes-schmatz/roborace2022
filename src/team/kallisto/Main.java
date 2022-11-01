@@ -1,13 +1,12 @@
 package team.kallisto;
 
-import lejos.hardware.BrickFinder;
-import lejos.hardware.Button;
-import lejos.hardware.Keys;
-import lejos.hardware.ev3.EV3;
-import lejos.hardware.lcd.Font;
+import lejos.hardware.Sound;
 import lejos.hardware.lcd.LCD;
-import lejos.hardware.lcd.TextLCD;
+import lejos.utility.Delay;
 import lejos.utility.TextMenu;
+import team.kallisto.calibration.Calibration;
+import team.kallisto.run.LineFollower;
+import team.kallisto.run.Run;
 import team.kallisto.task.CalibrateTask;
 import team.kallisto.task.RunTask;
 import team.kallisto.task.Task;
@@ -17,26 +16,40 @@ import java.util.List;
 
 public class Main {
 	static final List<Task> tasks = new ArrayList<>();
-	TextMenu menu = createMenu();
+	final TextMenu menu = createMenu();
+	@SuppressWarnings("ResultOfMethodCallIgnored")
 	public Main(String[] args) {
-
+		Logger.init();
+		// ensure all classes are loaded (doesn't work)
+		Calibration.class.getName();
+		LineFollower.class.getName();
+		Run.class.getName();
+		CalibrateTask.class.getName();
+		RunTask.class.getName();
+		Task.class.getName();
+		LimitedScaledMotor.class.getName();
+		Motors.class.getName();
+		Sensors.init();
 	}
 	public void main() {
+		Logger.println("starting up");
+
 		Task task = selectTask();
-		while (task != null) {
-			try {
-				task.run();
-			} catch (Throwable throwable) {
-				displayCrashScreen(throwable);
-			}
+		while (task != null) { // task == null means it's quit
+
+			// don't catch it here, because leJOS displays a nice screen
+			task.run();
+
+			// move to the middle again
+			Motors.rotateTo0AndFltAndReset();
+
+			// to prevent exiting the menu too
+			Delay.msDelay(100);
+
 			task = selectTask();
 		}
 
-		EV3 ev3 = (EV3) BrickFinder.getLocal();
-		TextLCD lcd = ev3.getTextLCD();
-		lcd.drawString("Hello World", 4, 4);
-		Keys keys = ev3.getKeys();
-		keys.waitForAnyPress();
+		Logger.println("stopping it all");
 	}
 
 	/**
@@ -45,6 +58,7 @@ public class Main {
 	private static void close() {
 		Sensors.close();
 		Motors.close();
+		Logger.close();
 	}
 
 	/**
@@ -53,6 +67,7 @@ public class Main {
 	 */
 	private Task selectTask() {
 		LCD.clear();
+		Sound.buzz();
 		int response = menu.select();
 		LCD.clear();
 
@@ -61,7 +76,9 @@ public class Main {
 		if (response == -2 || response == -1) // quit by other thread, escape
 			return null;
 
-		return tasks.get(response);
+		Task task = tasks.get(response);
+		Logger.println("starting task: %s", task.getName());
+		return task;
 	}
 
 	/**
@@ -76,49 +93,11 @@ public class Main {
 		return new TextMenu(list);
 	}
 
-	/**
-	 * displays the stacktrace on the display of the ev3, wait for user input
-	 * @param throwable the throwable to display
-	 */
-	private void displayCrashScreen(Throwable throwable) {
-		LCD.clear();
-		printPos = 0;
-		printStackTrace(throwable);
-		Button.ENTER.waitForPressAndRelease();
-		LCD.clear();
-	}
-
-	/**
-	 * print the stack trace, recursive for caused by
-	 * @param throwable the throwable to print
-	 */
-	private void printStackTrace(Throwable throwable) {
-		writeStringToLcd(throwable.toString());
-
-		for (StackTraceElement traceElement: throwable.getStackTrace())
-			writeStringToLcd("\tat " + traceElement);
-
-		Throwable causedBy = throwable.getCause();
-		if (causedBy != null)
-			printStackTrace(causedBy);
-	}
-
-	private static int printPos = 0; // used for printing at the correct position
-
-	/**
-	 * writes text
-	 * @param text the text to print in the next line
-	 */
-	private void writeStringToLcd(String text) {
-		// TODO: improve this, maybe move to utility class
-		Font defaultFont = Font.getDefaultFont();
-		LCD.drawString(text, printPos, 0);
-		printPos += defaultFont.height;
-	}
-
 	static {
 		tasks.add(new RunTask());
-		tasks.add(new CalibrateTask());
+		tasks.add(new CalibrateTask(false));
+		tasks.add(new CalibrateTask(true));
+		tasks.add(new Calibration.DefaultCalibrationSetter());
 
 		Thread cleanup = new Thread(Main::close);
 		Runtime.getRuntime().addShutdownHook(cleanup);
