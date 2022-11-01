@@ -8,5 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="ev3classes-src" level="project" />
+    <orderEntry type="library" name="annotations-20.1.0" level="project" />
   </component>
 </module>

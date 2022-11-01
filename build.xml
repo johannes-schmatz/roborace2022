@@ -34,7 +34,8 @@
         </javac>
     </target>
 
-    <target name="jar" depends="compile">
+    <!--target name="jar" depends="compile"-->
+    <target name="jar">
         <jar destfile="${output.jar}" basedir="${classes.dir}">
             <manifest>
                 <attribute name="Main-Class" value="${main.class}"/>
@@ -48,6 +49,15 @@
             <fileset file="${output.jar}"/>
         </scp>
     </target>
+
+    <!--target name="run" depends="upload">
+        <sshexec
+                host="${ev3.host}"
+                username="${credentials.user}"
+                password="${credentials.password}"
+                command="cat ${log.file}"
+        />
+    </target-->
 
     <!-- generate javadocs -->
     <target name="docs" description="generate javadocs">
