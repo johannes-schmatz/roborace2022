@@ -9,7 +9,7 @@ import team.kallisto.calibration.Calibration;
 public class LineFollower {
 	private static final int tps = 20;
 	private static final int mspt = 1000 / tps;
-	public static void run(Calibration calibration) {
+	public static void tick(Calibration calibration) {
 		long end = System.currentTimeMillis() + mspt;
 
 		while (System.currentTimeMillis() < end) {

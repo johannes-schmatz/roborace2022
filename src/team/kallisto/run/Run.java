@@ -17,7 +17,7 @@ public class Run {
 			//	state = 1;
 
 			if (state == 0) {
-				LineFollower.run(calibration);
+				LineFollower.tick(calibration);
 			} else if (state == 1) {
 				Run.switchLanes();
 			}

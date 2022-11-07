@@ -31,7 +31,7 @@ public class Main {
 		Motors.class.getName();
 		Sensors.init();
 	}
-	public void main() {
+	public void run() {
 		Logger.println("starting up");
 
 		Task task = selectTask();
@@ -53,26 +53,17 @@ public class Main {
 	}
 
 	/**
-	 * close all the open sensors stuff
-	 */
-	private static void close() {
-		Sensors.close();
-		Motors.close();
-		Logger.close();
-	}
-
-	/**
 	 * open a menu and ask user for a task, also clears the display
 	 * @return null if user wants to exit, otherwise the task to run
 	 */
-	private Task selectTask() {
+	private @Nullable Task selectTask() {
 		LCD.clear();
 		Sound.buzz();
 		int response = menu.select();
 		LCD.clear();
 
 		if (response == -3) // timeout
-			throw new IllegalStateException();
+			throw new IllegalStateException("timeout should not be possible");
 		if (response == -2 || response == -1) // quit by other thread, escape
 			return null;
 
@@ -98,8 +89,5 @@ public class Main {
 		tasks.add(new CalibrateTask(false));
 		tasks.add(new CalibrateTask(true));
 		tasks.add(new Calibration.DefaultCalibrationSetter());
-
-		Thread cleanup = new Thread(Main::close);
-		Runtime.getRuntime().addShutdownHook(cleanup);
 	}
 }
