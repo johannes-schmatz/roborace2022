@@ -44,9 +44,15 @@
         </jar>
     </target>
 
-    <target name="upload" depends="jar">
+    <target name="upload" depends="jar, hotswap">
         <scp todir="${credentials}@${ev3.host}:${programs.dir}" trust="true">
             <fileset file="${output.jar}"/>
+        </scp>
+    </target>
+
+    <target name="hotswap">
+        <scp todir="${credentials}@${ev3.host}:${hotswap.classes.dir}" trust="true">
+            <fileset dir="${classes.dir}"/>
         </scp>
     </target>
 

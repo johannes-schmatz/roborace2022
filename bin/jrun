@@ -1,0 +1,23 @@
+#! /bin/sh
+. /etc/default/lejos
+
+export LD_LIBRARY_PATH=${LEJOS_HOME}/libjna/usr/lib/arm-linux-gnueabi/:${LEJOS_HOME}/libjna/usr/lib/jni/
+
+classpath=${LEJOS_HOME}/lib/ev3classes.jar:${LEJOS_HOME}/lib/dbusjava.jar:${LEJOS_HOME}/lib/opencv-2411.jar:${LEJOS_HOME}/libjna/usr/share/java/jna.jar:.
+
+# append to classpath
+if [ "$1" = "-cp" ]
+then
+        classpath="$2":$classpath
+        shift 2
+fi
+
+# launched with the launch wrapper
+if [ "$1" = "lejos.internal.ev3.EV3Wrapper" -a "$2" = "HotswapMain" ]
+then
+	# we ignore the launch wrappers idea, if it's the HotswapMain case
+	shift
+fi
+
+
+exec ${LEJOS_HOME}/ejre*/bin/java -classpath $classpath $*
