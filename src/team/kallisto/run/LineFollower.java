@@ -1,6 +1,5 @@
 package team.kallisto.run;
 
-import team.kallisto.Logger;
 import team.kallisto.Motors;
 import team.kallisto.Sensors;
 import team.kallisto.calibration.Calibration;
@@ -56,16 +55,16 @@ public class LineFollower {
 			whiteAngleCount = 0;
 		}
 
-		boolean isWhite = value >= calibration.triggerBrightness;
+		boolean isBlack = value >= calibration.triggerBrightness;
 
 		//Logger.println("currentAngle: %4s, value: %4s, lineAngle: %4s, sum: %6s, count: %6s, isBlack: %6s, lA0:
-		// %6s, swD: %6s, wAC: %5s", currentAngle, value, lineAngle, blackAngleSum, blackAngleCount, !isWhite, lineAngle0, switchedDirection, whiteAngleCount);
+		// %6s, swD: %6s, wAC: %5s", currentAngle, value, lineAngle, blackAngleSum, blackAngleCount, !isBlack, lineAngle0, switchedDirection, whiteAngleCount);
 
-		if (!isWhite) {
+		if (isBlack) {
+			whiteAngleCount++;
+		} else {
 			blackAngleSum += currentAngle /*+ (Motors.MEASURE.isMovingForward() ? -1 : 1)*/;
 			blackAngleCount++;
-		} else  {
-			whiteAngleCount++;
 		}
 	}
 }

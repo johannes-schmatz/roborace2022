@@ -61,9 +61,12 @@ public class Logger {
 		System.out.println(System.currentTimeMillis() + " " + line);
 	}
 
+	@SuppressWarnings("OverloadedVarargsMethod")
 	public static void println(String format, Object... args) {
 		if (!enabled || writer == null) return;
-		System.out.format(System.currentTimeMillis() + " " + format + "%n", args);
+		System.out.print(System.currentTimeMillis() + " ");
+		System.out.format(format, args);
+		System.out.println();
 	}
 
 	private static void handleIOException(IOException e) {

@@ -1,10 +1,8 @@
 import java.io.IOException;
-import java.util.Arrays;
 
+@SuppressWarnings("ClassUnconnectedToPackage")
 public class HotswapMain {
 	public static void main(String[] args) {
-		//System.out.println("launching " + Arrays.toString(args));
-
 		String[] classPaths = {
 				"hotswap-agent.jar",
 				"/home/root/classes",
@@ -31,6 +29,5 @@ public class HotswapMain {
 		} catch (InterruptedException | IOException e) {
 			throw new RuntimeException(e);
 		}
-		//System.out.println("exiting");
 	}
 }

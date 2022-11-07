@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--suppress XmlHighlighting, XmlHighlighting -->
 <project name="roborace2022" default="upload">
     <property file="build.properties"/>
 

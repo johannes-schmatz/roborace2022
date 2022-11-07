@@ -1,6 +1,5 @@
 package team.kallisto;
 
-import lejos.hardware.Sound;
 import lejos.hardware.lcd.LCD;
 import lejos.utility.Delay;
 import lejos.utility.TextMenu;
