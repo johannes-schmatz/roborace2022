@@ -26,7 +26,8 @@ public class LineFollower {
 		blackAngleSum = 0;
 		blackAngleCount = 0;
 		whiteAngleCount = 0;
-		Motors.DRIVE.setSpeedRelative(10);
+		Motors.STEER.setSpeedRelativeToMax(100);
+		Motors.DRIVE.setSpeedRelativeToMax(20);
 		Motors.DRIVE.forward();
 	}
 

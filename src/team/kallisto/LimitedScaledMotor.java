@@ -73,8 +73,8 @@ public class LimitedScaledMotor implements RegulatedMotor {
 		return getRotationSpeed() >= 0;
 	}
 
-	public void setSpeedRelative(int percent) {
-		float newSpeed = this.getMaxSpeed() * (float) percent / 100f;
+	public void setSpeedRelativeToMax(int percent) {
+		float newSpeed = this.getMaxSpeed() * percent / 100.0f;
 		this.setSpeed((int) newSpeed);
 	}
 
@@ -131,28 +131,28 @@ public class LimitedScaledMotor implements RegulatedMotor {
 	/**
 	 * MIGHT NOT BE EXACT
 	 */
-	@Deprecated
+	//@Deprecated
 	@Override
 	public void setSpeed(int speed) {
-		motor.setSpeed(speed);
+		motor.setSpeed(speed * scale);
 	}
 
 	/**
 	 * MIGHT NOT BE EXACT
 	 */
-	@Deprecated
+	//@Deprecated
 	@Override
 	public int getSpeed() {
-		return motor.getSpeed();
+		return motor.getSpeed() / scale;
 	}
 
 	/**
 	 * MIGHT NOT BE EXACT
 	 */
-	@Deprecated
+	//@Deprecated
 	@Override
 	public float getMaxSpeed() {
-		return motor.getMaxSpeed();
+		return motor.getMaxSpeed() / scale;
 	}
 
 	@Override
@@ -222,10 +222,10 @@ public class LimitedScaledMotor implements RegulatedMotor {
 	/**
 	 * MIGHT NOT BE EXACT
 	 */
-	@Deprecated
+	//@Deprecated
 	@Override
 	public int getRotationSpeed() {
-		return motor.getRotationSpeed();
+		return motor.getRotationSpeed() / scale;
 	}
 
 	@Override

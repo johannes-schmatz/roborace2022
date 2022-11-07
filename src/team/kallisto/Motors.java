@@ -25,14 +25,17 @@ public class Motors {
 	}
 
 	public static void reset() {
+		MEASURE.setSpeedRelativeToMax(100);
+
 		DRIVE.resetTachoCount();
 		MEASURE.resetTachoCount();
 		STEER.resetTachoCount();
 	}
 
 	public static final LimitedScaledMotor DRIVE = new LimitedScaledMotor(new EV3LargeRegulatedMotor(MotorPort.D));
-	public static final LimitedScaledMotor MEASURE = new LimitedScaledMotor(new EV3MediumRegulatedMotor(MotorPort.B), 65, 6);
-	public static final RegulatedMotor STEER = new LimitedScaledMotor(new EV3LargeRegulatedMotor(MotorPort.A), 45, 15);
+	public static final LimitedScaledMotor MEASURE = new LimitedScaledMotor(new EV3MediumRegulatedMotor(MotorPort.B),
+			73, 6);
+	public static final LimitedScaledMotor STEER = new LimitedScaledMotor(new EV3LargeRegulatedMotor(MotorPort.A), 45, 15);
 
 	static {
 		reset();
