@@ -58,7 +58,8 @@ public class LineFollower {
 
 		boolean isWhite = value >= calibration.triggerBrightness;
 
-		Logger.println("currentAngle: %4s, value: %4s, lineAngle: %4s, sum: %6s, count: %6s, isBlack: %6s, lA0: %6s, swD: %6s, wAC: %5s", currentAngle, value, lineAngle, blackAngleSum, blackAngleCount, !isWhite, lineAngle0, switchedDirection, whiteAngleCount);
+		//Logger.println("currentAngle: %4s, value: %4s, lineAngle: %4s, sum: %6s, count: %6s, isBlack: %6s, lA0:
+		// %6s, swD: %6s, wAC: %5s", currentAngle, value, lineAngle, blackAngleSum, blackAngleCount, !isWhite, lineAngle0, switchedDirection, whiteAngleCount);
 
 		if (!isWhite) {
 			blackAngleSum += currentAngle /*+ (Motors.MEASURE.isMovingForward() ? -1 : 1)*/;

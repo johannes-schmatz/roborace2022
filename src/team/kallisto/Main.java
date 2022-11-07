@@ -59,7 +59,7 @@ public class Main {
 	 */
 	private @Nullable Task selectTask() {
 		LCD.clear();
-		Sound.buzz();
+		//Sound.buzz();
 		int response = menu.select();
 		LCD.clear();
 
