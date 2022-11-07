@@ -6,7 +6,7 @@ import lejos.hardware.port.MotorPort;
 import lejos.robotics.RegulatedMotor;
 
 public class Motors {
-	public static void close() {
+	private static void close() {
 		rotateTo0AndFltAndReset();
 
 		DRIVE.close();
@@ -61,5 +61,9 @@ public class Motors {
 
 	public static void startSwinging() {
 		MEASURE.rotateTo(MEASURE.positiveLimit, true);
+	}
+
+	static {
+		Runtime.getRuntime().addShutdownHook(new Thread(Motors::close));
 	}
 }

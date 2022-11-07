@@ -16,6 +16,7 @@ public class Logger {
 	static {
 		out = System.out;
 		err = System.err;
+		Runtime.getRuntime().addShutdownHook(new Thread(Logger::close));
 	}
 
 	public static void init() {
@@ -46,7 +47,7 @@ public class Logger {
 		}
 	}
 
-	public static void close() {
+	private static void close() {
 		if (!enabled || writer == null) return;
 		try {
 			writer.close();

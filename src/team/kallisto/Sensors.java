@@ -6,7 +6,7 @@ import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.hardware.sensor.EV3UltrasonicSensor;
 
 public class Sensors {
-	public static void close() {
+	private static void close() {
 		ULTRASONIC_SENSOR.close();
 		COLOR_SENSOR.close();
 	}
@@ -71,5 +71,9 @@ public class Sensors {
 			int raw = port.getShort(); // in mm
 			return (raw == 2550) ? -1 : raw;
 		}
+	}
+
+	static {
+		Runtime.getRuntime().addShutdownHook(new Thread(Sensors::close));
 	}
 }
