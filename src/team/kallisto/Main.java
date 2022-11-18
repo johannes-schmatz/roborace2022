@@ -1,5 +1,7 @@
 package team.kallisto;
 
+import lejos.hardware.Button;
+import lejos.hardware.Sound;
 import lejos.hardware.lcd.LCD;
 import lejos.utility.Delay;
 import lejos.utility.TextMenu;
@@ -57,8 +59,12 @@ public class Main {
 	 * @return null if user wants to exit, otherwise the task to run
 	 */
 	private @Nullable Task selectTask() {
+		while (Button.ESCAPE.isDown()) {
+			Sound.beep();
+		}
+		Delay.msDelay(100);
 		LCD.clear();
-		//Sound.buzz();
+		Sound.buzz();
 		int response = menu.select();
 		LCD.clear();
 
@@ -89,5 +95,6 @@ public class Main {
 		tasks.add(new CalibrateTask(false));
 		tasks.add(new CalibrateTask(true));
 		tasks.add(new Calibration.DefaultCalibrationSetter());
+		tasks.add(new Motors.ResetTachoCountTask());
 	}
 }

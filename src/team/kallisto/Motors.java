@@ -61,11 +61,23 @@ public class Motors {
 		return 0;
 	}
 
-	public static void startSwinging() {
-		MEASURE.rotateTo(MEASURE.positiveLimit, true);
+	public static void startSwinging(boolean positive) {
+		MEASURE.rotateTo((positive ? 1 : -1) * MEASURE.positiveLimit, true);
 	}
 
 	static {
 		Runtime.getRuntime().addShutdownHook(new Thread(Motors::close));
+	}
+
+	public static class ResetTachoCountTask implements team.kallisto.task.Task {
+		@Override
+		public void run() {
+			Motors.reset();
+		}
+
+		@Override
+		public String getName() {
+			return "reset angle measurements";
+		}
 	}
 }
