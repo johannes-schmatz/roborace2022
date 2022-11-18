@@ -58,15 +58,24 @@ public class Logger {
 
 	public static void println(String line) {
 		if (!enabled || writer == null) return;
-		System.out.println(System.currentTimeMillis() + " " + line);
+		System.out.println(System.currentTimeMillis() + " " + getCallerCaller() + " " + line);
 	}
 
 	@SuppressWarnings("OverloadedVarargsMethod")
 	public static void println(String format, Object... args) {
 		if (!enabled || writer == null) return;
-		System.out.print(System.currentTimeMillis() + " ");
+		System.out.print(System.currentTimeMillis() + " " + getCallerCaller() + " ");
 		System.out.format(format, args);
 		System.out.println();
+	}
+
+	private static String getCallerCaller() {
+		StackTraceElement[] trace = Thread.currentThread().getStackTrace();
+		int n = 3;
+		if (trace.length <= n) return "<none>";
+		String fullName = trace[n].getClassName();
+		int i = fullName.lastIndexOf('.');
+		return fullName.substring(i + 1);
 	}
 
 	private static void handleIOException(IOException e) {
