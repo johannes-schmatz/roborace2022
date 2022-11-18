@@ -1,5 +1,6 @@
 package team.kallisto.run;
 
+import team.kallisto.Logger;
 import team.kallisto.Motors;
 import team.kallisto.Sensors;
 import team.kallisto.calibration.Calibration;
@@ -11,9 +12,12 @@ public class LineFollower {
 	public static void tick(Calibration calibration) {
 		long end = System.currentTimeMillis() + mspt;
 
+		int i = 0;
 		while (System.currentTimeMillis() < end) {
 			measure(calibration);
+			i++;
 		}
+		Logger.println("" + i);
 
 		drive();
 	}
@@ -26,7 +30,7 @@ public class LineFollower {
 		blackAngleCount = 0;
 		whiteAngleCount = 0;
 		Motors.STEER.setSpeedRelativeToMax(100);
-		Motors.DRIVE.setSpeedRelativeToMax(20);
+		Motors.DRIVE.setSpeedRelativeToMax(15);
 		Motors.DRIVE.forward();
 	}
 
