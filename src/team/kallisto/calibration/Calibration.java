@@ -8,7 +8,7 @@ import team.kallisto.Sensors;
 import team.kallisto.task.Task;
 
 public class Calibration {
-	private static final Calibration DEFAULT = new Calibration(20, 2);
+	private static final Calibration DEFAULT = new Calibration(20, 2, 6, 28);
 	private static Calibration calibration = DEFAULT; // TODO: maybe change back to null to require user to run it again
 
 	public static class DefaultCalibrationSetter implements Task {
@@ -55,18 +55,22 @@ public class Calibration {
 
 		Logger.println("brightness: minimum: %s, average: %s, maximum: %s", minimumBrightness, averageBrightness, maximumBrightness);
 
-		calibration = new Calibration(averageBrightness, 3);
+		calibration = new Calibration(averageBrightness, 3, minimumBrightness, maximumBrightness);
 	}
 
 	public static Calibration getCalibration() {
 		return calibration;
 	}
 
-	private Calibration(int triggerBrightness, int angleOffset) {
+	private Calibration(int triggerBrightness, int angleOffset, int minimumBrightness, int maximumBrightness) {
 		this.triggerBrightness = triggerBrightness;
 		this.angleOffset = angleOffset;
+		this.minimumBrightness = minimumBrightness;
+		this.maximumBrightness = maximumBrightness;
 	}
 
 	public final int triggerBrightness;
 	public final int angleOffset;
+	public final int minimumBrightness;
+	public final int maximumBrightness;
 }
