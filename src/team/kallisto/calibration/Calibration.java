@@ -24,14 +24,6 @@ public class Calibration {
 	}
 
 	public static void calibrate() {
-		calibration = new Calibration();
-	}
-
-	public static Calibration getCalibration() {
-		return calibration;
-	}
-
-	private Calibration() {
 		Logger./*out.*/println("set robot on the drive line and press any button");
 		Button.waitForAnyPress();
 
@@ -63,8 +55,11 @@ public class Calibration {
 
 		Logger.println("brightness: minimum: %s, average: %s, maximum: %s", minimumBrightness, averageBrightness, maximumBrightness);
 
-		this.triggerBrightness = averageBrightness;
-		this.angleOffset = 3;
+		calibration = new Calibration(averageBrightness, 3);
+	}
+
+	public static Calibration getCalibration() {
+		return calibration;
 	}
 
 	private Calibration(int triggerBrightness, int angleOffset) {
