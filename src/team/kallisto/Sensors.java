@@ -29,7 +29,7 @@ public class Sensors {
 
 	/**
 	 * gets the current distance from the sensor
-	 * @return distance, in mm, or -1 if it's infinity
+	 * @return distance, in mm, or {@code Integer.MAX_VALUE} if it's infinity
 	 */
 	public static int getDistance() {
 		return ULTRASONIC_SENSOR.getDistance();
@@ -62,14 +62,14 @@ public class Sensors {
 		}
 
 		/**
-		 * @return the distance in mm, -1 means infinity
+		 * @return the distance in mm, {@code Integer.MAX_VALUE} means infinity
 		 */
 		private int getDistance() {
 			if (currentMode != 0)
 				throw new IllegalStateException("mode is not DISTANCE_MODE (0)");
 
 			int raw = port.getShort(); // in mm
-			return (raw == 2550) ? -1 : raw;
+			return (raw == 2550) ? Integer.MAX_VALUE : raw;
 		}
 	}
 

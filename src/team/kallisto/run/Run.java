@@ -13,15 +13,14 @@ public class Run {
 		int lane = 0; // 0 means rightmost lane, 1 means center, 2 leftmost
 		int switchOffCountdown = 0;
 
-		Motors.startSwinging(true);
-		LineFollower.reset();
+		LineFollower.reset(calibration);
 		while (!Button.ESCAPE.isDown()) {
 			int newLane = lane == 0 ? 1 : 0;
 			if (state == 0 && switchOffCountdown == 0) {
 				int frontDistance = Sensors.getDistance();
 				int angle = Motors.MEASURE.getTachoCount();
-				Logger.println("" + angle);
-				if (frontDistance <= 350 && frontDistance != -1 && angle <= 5 && angle >= -5) {
+				Logger.println(String.valueOf(angle));
+				if (frontDistance <= 350 && angle <= 5 && angle >= -5) {
 					state = 1;
 					beforeSwitchingLanes(lane, newLane);
 					//Motors.DRIVE.stop();

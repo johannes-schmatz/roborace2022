@@ -28,7 +28,8 @@ public class LineFollowerSwinging {
 
 	private static int lineAngle = 0;
 
-	public static void reset() {
+	public static void reset(Calibration calibration) {
+		Motors.startSwinging(true);
 		lineAngle = 0;
 		blackAngleSum = 0;
 		blackAngleCount = 0;
