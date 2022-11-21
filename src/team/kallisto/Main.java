@@ -7,7 +7,6 @@ import lejos.utility.Delay;
 import lejos.utility.TextMenu;
 import org.jetbrains.annotations.Nullable;
 import team.kallisto.calibration.Calibration;
-import team.kallisto.run.LineFollower;
 import team.kallisto.run.Run;
 import team.kallisto.task.CalibrateTask;
 import team.kallisto.task.RunTask;
@@ -24,7 +23,6 @@ public class Main {
 		Logger.init();
 		// ensure all classes are loaded (doesn't work)
 		Calibration.class.getName();
-		LineFollower.class.getName();
 		Run.class.getName();
 		CalibrateTask.class.getName();
 		RunTask.class.getName();

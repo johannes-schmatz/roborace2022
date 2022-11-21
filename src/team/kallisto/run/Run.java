@@ -13,7 +13,7 @@ public class Run {
 		int lane = 0; // 0 means rightmost lane, 1 means center, 2 leftmost
 		int switchOffCountdown = 0;
 
-		LineFollower.reset(calibration);
+		LineFollower follower = new LineFollowerHalfLine(calibration);
 		while (!Button.ESCAPE.isDown()) {
 			int newLane = lane == 0 ? 1 : 0;
 			if (state == 0 && switchOffCountdown == 0) {
@@ -32,7 +32,7 @@ public class Run {
 			if (switchOffCountdown > 0) switchOffCountdown--;
 
 			if (state == 0) {
-				LineFollower.tick(calibration);
+				follower.tick();
 			} else {
 				boolean finishedSwitching = Run.switchLanesTick(calibration);
 				if (finishedSwitching) {
