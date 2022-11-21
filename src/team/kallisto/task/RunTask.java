@@ -6,7 +6,7 @@ import team.kallisto.run.Run;
 public class RunTask implements Task {
 	@Override
 	public void run() {
-		new Run().run(Calibration.getCalibration());
+		Run.run(Calibration.getCalibration());
 	}
 
 	@Override

@@ -24,10 +24,6 @@ public class LineFollowerSwinging implements LineFollower {
 		this.calibration = calibration;
 
 		Motors.startSwinging(true);
-		lineAngle = 0;
-		blackAngleSum = 0;
-		blackAngleCount = 0;
-		whiteAngleCount = 0;
 		Motors.STEER.setSpeedRelativeToMax(100);
 		Motors.DRIVE.setSpeedRelativeToMax(15);
 		Sound.beepSequenceUp();

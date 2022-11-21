@@ -53,7 +53,8 @@ public class Calibration {
 
 		int averageBrightness = sum / numberOfMeasurements;
 
-		Logger.println("brightness: minimum: %s, average: %s, maximum: %s", minimumBrightness, averageBrightness, maximumBrightness);
+		Logger.println("brightness: minimum: %s, average: %s, maximum: %s",
+				minimumBrightness, averageBrightness, maximumBrightness);
 
 		calibration = new Calibration(averageBrightness, 3, minimumBrightness, maximumBrightness);
 	}

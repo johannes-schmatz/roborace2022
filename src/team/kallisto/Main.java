@@ -17,9 +17,9 @@ import java.util.List;
 
 public class Main {
 	static final List<Task> tasks = new ArrayList<>();
-	final TextMenu menu = createMenu();
+	private final TextMenu menu = createMenu();
 	@SuppressWarnings("ResultOfMethodCallIgnored")
-	public Main(String[] args) {
+	public Main(String[] ignoredArgs) {
 		Logger.init();
 		// ensure all classes are loaded (doesn't work)
 		Calibration.class.getName();
@@ -80,7 +80,7 @@ public class Main {
 	 * create the menu to be used to display the tasks
 	 * @return the menu
 	 */
-	private TextMenu createMenu() {
+	private static TextMenu createMenu() {
 		String[] list = new String[tasks.size()];
 		for (int i = 0; i < list.length; i++) {
 			list[i] = tasks.get(i).getName();

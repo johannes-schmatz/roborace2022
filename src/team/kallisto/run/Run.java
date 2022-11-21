@@ -8,7 +8,7 @@ import team.kallisto.Sensors;
 import team.kallisto.calibration.Calibration;
 
 public class Run {
-	public void run(Calibration calibration) {
+	public static void run(Calibration calibration) {
 		int state = 0; // 0 = on line, 1 = passing between two
 		int lane = 0; // 0 means rightmost lane, 1 means center, 2 leftmost
 		int switchOffCountdown = 0;
@@ -68,6 +68,7 @@ public class Run {
 	}
 
 	private static final int switchLaneAngle = 45;
+	//TODO: turns out the line angles can be max. 30° (in front)
 	private static void beforeSwitchingLanes(int oldLane, int newLane) {
 		Motors.slowDrivingDown();
 		if (newLane > oldLane) {
@@ -78,6 +79,7 @@ public class Run {
 			Motors.STEER.rotateTo(-switchLaneAngle, true);
 		}
 		Delay.msDelay(2000);
+		//Delay.msDelay(400);
 		Motors.MEASURE.rotateTo(0, false);
 	}
 

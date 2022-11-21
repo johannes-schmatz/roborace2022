@@ -4,6 +4,7 @@ import lejos.hardware.port.Port;
 import lejos.hardware.port.SensorPort;
 import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.hardware.sensor.EV3UltrasonicSensor;
+import lejos.hardware.sensor.SensorMode;
 
 public class Sensors {
 	private static void close() {
@@ -43,6 +44,9 @@ public class Sensors {
 		private void init() {
 			//port.initialiseSensor(COL_REFLECT);
 			//switchMode(COL_REFLECT, SWITCH_DELAY);
+			SensorMode mode = getRedMode();
+			float[] sample = new float[mode.sampleSize()];
+			mode.fetchSample(sample, 0);
 		}
 
 		/**
