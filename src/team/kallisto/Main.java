@@ -21,7 +21,7 @@ public class Main {
 	public Main(String[] args) {
 		Logger.init();
 		Sensors.init();
-		Logger.println("starting up, args were" + Arrays.toString(args));
+		Logger.println("starting up, args were " + Arrays.toString(args));
 	}
 	public void run() {
 		Task task = selectTask();

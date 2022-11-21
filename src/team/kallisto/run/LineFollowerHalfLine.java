@@ -17,12 +17,12 @@ public class LineFollowerHalfLine implements LineFollower {
 	private final Pid pid;
 
 	public LineFollowerHalfLine(Calibration calibration) {
-		int average = (calibration.minimumBrightness + calibration.maximumBrightness) / 2;
-		pid = new Pid(1, 0.01, -0.5, average);
-		Motors.MEASURE.rotateTo(25, false);
+
+		pid = new Pid(1, /*0.01*/0, -0.5, calibration.averageBrightness, calibration.averageBrightness);
+		Motors.MEASURE.rotateTo(15, false);
 
 		Motors.STEER.setSpeedRelativeToMax(100);
-		Motors.DRIVE.setSpeedRelativeToMax(15);
+		Motors.DRIVE.setSpeedRelativeToMax(50);
 		Sound.beepSequenceUp();
 		Motors.DRIVE.forward();
 	}

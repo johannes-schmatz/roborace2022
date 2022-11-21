@@ -5,7 +5,8 @@ public class Pid {
 	private double k_i;
 	private double k_d;
 
-	private double lastValue = 0;
+	private double lastValue = 0; // stored as the original value, so not offset with targetValue
+	private double targetValue = 0;
 	private double integral = 0;
 
 	public Pid(double k_p, double k_i, double k_d) {
@@ -19,12 +20,20 @@ public class Pid {
 		this.lastValue = lastValue;
 	}
 
+	public Pid(double k_p, double k_i, double k_d, double lastValue, double targetValue) {
+		this(k_p, k_i, k_d);
+		this.lastValue = lastValue;
+		this.targetValue = targetValue;
+	}
+
 	public double pid(double value) {
 		double d = value - lastValue;
 		lastValue = value;
 
-		integral += value;
+		double relativeValue = value - targetValue;
 
-		return k_p * value + k_i * integral + k_d * d;
+		integral += relativeValue;
+
+		return k_p * relativeValue + k_i * integral + k_d * d;
 	}
 }

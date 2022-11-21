@@ -53,9 +53,6 @@ public class Calibration {
 
 		int averageBrightness = sum / numberOfMeasurements;
 
-		Logger.println("brightness: minimum: %s, average: %s, maximum: %s",
-				minimumBrightness, averageBrightness, maximumBrightness);
-
 		calibration = new Calibration(averageBrightness, 3, minimumBrightness, maximumBrightness);
 	}
 
@@ -64,14 +61,18 @@ public class Calibration {
 	}
 
 	private Calibration(int triggerBrightness, int angleOffset, int minimumBrightness, int maximumBrightness) {
+		Logger.println("triggerBrightness: %s, angleOffset: %s, minimumBrightness: %s, maximumBrightness: %s",
+				triggerBrightness, angleOffset, minimumBrightness, maximumBrightness);
 		this.triggerBrightness = triggerBrightness;
 		this.angleOffset = angleOffset;
 		this.minimumBrightness = minimumBrightness;
 		this.maximumBrightness = maximumBrightness;
+		this.averageBrightness = (minimumBrightness + maximumBrightness) / 2;
 	}
 
 	public final int triggerBrightness;
 	public final int angleOffset;
 	public final int minimumBrightness;
 	public final int maximumBrightness;
+	public final int averageBrightness;
 }
