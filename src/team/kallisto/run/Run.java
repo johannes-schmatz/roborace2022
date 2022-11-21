@@ -10,7 +10,7 @@ import team.kallisto.calibration.Calibration;
 public class Run {
 	public static void run(Calibration calibration) {
 		int state = 0; // 0 = on line, 1 = passing between two
-		int lane = 0; // 0 means rightmost lane, 1 means center, 2 leftmost
+		int lane = 1; // 0 means rightmost lane, 1 means center, 2 leftmost
 		int switchOffCountdown = 0;
 
 		LineFollower follower = new LineFollowerHalfLine(calibration);
@@ -19,8 +19,8 @@ public class Run {
 			if (state == 0 && switchOffCountdown == 0) {
 				int frontDistance = Sensors.getDistance();
 				int angle = Motors.MEASURE.getTachoCount();
-				Logger.println(String.valueOf(angle));
-				if (frontDistance <= 350 && angle <= 5 && angle >= -5) {
+				Logger.println("angle: " + angle + ", frontDistance: " + frontDistance);
+				if (frontDistance <= 350 /*&& angle <= 5 && angle >= -5*/) {
 					state = 1;
 					beforeSwitchingLanes(lane, newLane);
 					//Motors.DRIVE.stop();
@@ -53,9 +53,10 @@ public class Run {
 		}
 
 		if (Sensors.getBrightness() < calibration.triggerBrightness) {
-			Delay.msDelay(500);
-			Motors.startSwinging(laneNumberRose);
-			Motors.STEER.rotateTo(-Motors.STEER.getTachoCount(), false);
+			//Delay.msDelay(500);
+			//Motors.startSwinging(laneNumberRose);
+			//TODO: invert later on, make compatible with both directions
+			Motors.STEER.rotateTo(switchLaneAngle, false);
 			Motors.STEER.rotateTo(0, true);
 			Motors.speedDrivingUp();
 			return true;
@@ -78,9 +79,10 @@ public class Run {
 			laneNumberRose = false;
 			Motors.STEER.rotateTo(-switchLaneAngle, true);
 		}
-		Delay.msDelay(2000);
-		//Delay.msDelay(400);
+		//Delay.msDelay(2000);
+		Delay.msDelay(400);
 		Motors.MEASURE.rotateTo(0, false);
+		Motors.STEER.rotateTo(0, true);
 	}
 
 	private static boolean laneNumberRose = false;
