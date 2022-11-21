@@ -42,8 +42,7 @@ public class Sensors {
 		}
 
 		private void init() {
-			//port.initialiseSensor(COL_REFLECT);
-			//switchMode(COL_REFLECT, SWITCH_DELAY);
+			// we get some sensor data here, this initialises the sensor
 			SensorMode mode = getRedMode();
 			float[] sample = new float[mode.sampleSize()];
 			mode.fetchSample(sample, 0);

@@ -7,33 +7,23 @@ import lejos.utility.Delay;
 import lejos.utility.TextMenu;
 import org.jetbrains.annotations.Nullable;
 import team.kallisto.calibration.Calibration;
-import team.kallisto.run.Run;
 import team.kallisto.task.CalibrateTask;
 import team.kallisto.task.RunTask;
 import team.kallisto.task.Task;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Main {
 	static final List<Task> tasks = new ArrayList<>();
 	private final TextMenu menu = createMenu();
-	@SuppressWarnings("ResultOfMethodCallIgnored")
-	public Main(String[] ignoredArgs) {
+	public Main(String[] args) {
 		Logger.init();
-		// ensure all classes are loaded (doesn't work)
-		Calibration.class.getName();
-		Run.class.getName();
-		CalibrateTask.class.getName();
-		RunTask.class.getName();
-		Task.class.getName();
-		LimitedScaledMotor.class.getName();
-		Motors.class.getName();
 		Sensors.init();
+		Logger.println("starting up, args were" + Arrays.toString(args));
 	}
 	public void run() {
-		Logger.println("starting up");
-
 		Task task = selectTask();
 		while (task != null) { // task == null means it's quit
 
